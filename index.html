@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Handmade & Home Fragrance Shop</title>
+    <title>Cozy Cup & Candle Co.</title>
     <style>
         :root {
-            --bg: #f7f4ef;
-            --surface: #ffffff;
-            --surface-soft: #efe7dd;
-            --beige: #e3d7c9;
-            --beige-dark: #d6c6b4;
-            --text: #4a433b;
-            --text-strong: #5a5248;
-            --accent: #b7816a;
-            --shadow: rgba(0, 0, 0, 0.08);
+            --bg: #f6efe8;
+            --bg-strong: #efe1d1;
+            --surface: #fffdfb;
+            --card: #fffaf3;
+            --beige: #e4c7a7;
+            --beige-dark: #d3a979;
+            --coffee: #5a3422;
+            --coffee-deep: #3a2219;
+            --latte: #f0e4d6;
+            --accent: #b66c44;
+            --text: #43352f;
+            --text-soft: #6b544d;
+            --shadow: rgba(58, 34, 25, 0.12);
         }
 
         * {
@@ -24,24 +28,25 @@
         body {
             margin: 0;
             font-family: "Segoe UI", sans-serif;
-            background-color: var(--bg);
+            background: linear-gradient(to bottom, var(--bg), #f9f2eb);
             color: var(--text);
         }
 
         h1 {
             text-align: center;
             margin-top: 40px;
-            font-size: 3rem;
-            color: var(--text-strong);
+            font-size: 3.1rem;
+            color: var(--coffee-deep);
             font-family: "Brush Script MT", "Lucida Handwriting", cursive;
             font-weight: normal;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.08);
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.06);
         }
 
         .divider {
-            width: 80px;
+            width: 90px;
             height: 4px;
-            background-color: #d8c7b4;
+            background: linear-gradient(to right, var(--beige), var(--accent));
             border-radius: 10px;
             margin: 15px auto 30px auto;
         }
@@ -56,22 +61,22 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text);
-            font-weight: 600;
-            background-color: var(--beige);
-            padding: 10px 20px;
-            border-radius: 20px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            color: var(--coffee-deep);
+            font-weight: 700;
+            background-color: var(--latte);
+            padding: 12px 20px;
+            border-radius: 999px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
             transition: 0.2s ease;
         }
 
         .nav-links a:hover {
-            background-color: var(--beige-dark);
+            background-color: var(--beige);
             transform: translateY(-2px);
         }
 
         .page-shell {
-            max-width: 1100px;
+            max-width: 1120px;
             margin: 0 auto 60px;
             padding: 0 20px;
         }
@@ -86,8 +91,8 @@
         .product-panel,
         .cart-panel {
             background: var(--surface);
-            border-radius: 16px;
-            box-shadow: 0 3px 10px var(--shadow);
+            border-radius: 18px;
+            box-shadow: 0 5px 18px var(--shadow);
             padding: 25px;
         }
 
@@ -96,14 +101,14 @@
             justify-content: space-between;
             align-items: center;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             flex-wrap: wrap;
         }
 
         .section-header h2 {
             margin: 0;
-            font-size: 1.8rem;
-            color: var(--text-strong);
+            font-size: 1.9rem;
+            color: var(--coffee-deep);
         }
 
         .tab-list {
@@ -121,8 +126,8 @@
             border-radius: 999px;
             padding: 10px 18px;
             background-color: var(--beige);
-            color: var(--text);
-            font-weight: 600;
+            color: var(--coffee-deep);
+            font-weight: 700;
             cursor: pointer;
             transition: 0.2s ease;
         }
@@ -133,7 +138,7 @@
         }
 
         .tab-btn.active {
-            background-color: var(--accent);
+            background-color: var(--coffee);
             color: white;
         }
 
@@ -144,37 +149,38 @@
         }
 
         .product-card {
-            background: #fffaf6;
-            border: 1px solid #f0e5dc;
-            border-radius: 14px;
+            background: var(--card);
+            border: 1px solid #e8dbcb;
+            border-radius: 16px;
             padding: 18px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 3px 10px rgba(58, 34, 25, 0.04);
         }
 
         .product-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 2.1rem;
+            margin-bottom: 12px;
         }
 
         .product-card h3 {
             margin: 0 0 8px;
             font-size: 1.2rem;
+            color: var(--coffee-deep);
         }
 
         .product-category {
             display: inline-block;
-            margin-bottom: 10px;
-            font-size: 0.78rem;
+            margin-bottom: 12px;
+            font-size: 0.75rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: var(--accent);
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .product-card p {
             margin: 0 0 16px;
-            line-height: 1.5;
-            color: var(--text);
+            line-height: 1.6;
+            color: var(--text-soft);
         }
 
         .product-row {
@@ -185,14 +191,14 @@
         }
 
         .price {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-strong);
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--coffee-deep);
         }
 
         .cart-panel h2 {
             margin-top: 0;
-            color: var(--text-strong);
+            color: var(--coffee-deep);
         }
 
         .cart-items {
@@ -208,37 +214,38 @@
             justify-content: space-between;
             gap: 12px;
             padding-bottom: 8px;
-            border-bottom: 1px solid #f1e8df;
+            border-bottom: 1px solid #f0e2d6;
+            color: var(--text);
         }
 
         .cart-total {
             margin-top: 18px;
             padding-top: 18px;
-            border-top: 1px solid #f1e8df;
+            border-top: 1px solid #f0e2d6;
             display: flex;
             justify-content: space-between;
-            font-weight: 700;
-            color: var(--text-strong);
+            font-weight: 800;
+            color: var(--coffee-deep);
         }
 
         .empty-cart {
-            color: #7a6c63;
+            color: var(--text-soft);
             font-style: italic;
         }
 
         .accent-box {
             margin: 30px auto 0;
-            background-color: var(--surface-soft);
-            padding: 20px;
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--bg-strong), var(--latte));
+            padding: 22px;
+            border-radius: 14px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .accent-box p {
             margin: 0;
-            font-size: 1.1rem;
-            color: var(--text-strong);
+            font-size: 1.12rem;
+            color: var(--coffee-deep);
         }
 
         @media (max-width: 800px) {
@@ -249,13 +256,13 @@
     </style>
 </head>
 <body>
-    <h1>Handmade & Home Fragrance Shop</h1>
+    <h1>Cozy Cup & Candle Co.</h1>
     <div class="divider"></div>
 
     <div class="nav-links">
         <a href="#">Home</a>
         <a href="#">Handmade</a>
-        <a href="#">Home Fragrance</a>
+        <a href="#">Coffee & Candles</a>
         <a href="#">Cart <span id="cart-count">0</span></a>
     </div>
 
@@ -263,7 +270,7 @@
         <div class="shop-layout">
             <section class="product-panel">
                 <div class="section-header">
-                    <h2>Shop Products</h2>
+                    <h2>Today’s Favorites</h2>
                     <ul class="tab-list" aria-label="Product tabs">
                         <li><button class="tab-btn active" data-category="All" aria-pressed="true">All</button></li>
                         <li><button class="tab-btn" data-category="Handmade" aria-pressed="false">Handmade</button></li>
@@ -274,7 +281,7 @@
             </section>
 
             <aside class="cart-panel">
-                <h2>Your Cart</h2>
+                <h2>Your Cozy Cart</h2>
                 <ul id="cart-items" class="cart-items" aria-live="polite"></ul>
                 <div class="cart-total">
                     <span>Total:</span>
@@ -284,7 +291,7 @@
         </div>
 
         <div class="accent-box">
-            <p>🕯️ Light a candle, relax, and enjoy browsing.</p>
+            <p>☕ Slow sips, soft scents, and handcrafted comfort.</p>
         </div>
     </div>
 

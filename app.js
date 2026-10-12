@@ -1,31 +1,31 @@
 const products = [
     {
         id: 1,
-        name: "Lavender Wax Melt",
-        price: 4.99,
+        name: "Hazelnut Latte Candle",
+        price: 14.99,
         category: "Home Fragrance",
-        description: "A calming lavender scent that freshens the room and relaxes the mind."
+        description: "A warm coffeehouse scent with toasted hazelnut and creamy vanilla notes."
     },
     {
         id: 2,
-        name: "Vanilla Candle",
-        price: 12.99,
+        name: "Cinnamon Roll Wax Melt",
+        price: 6.99,
         category: "Home Fragrance",
-        description: "Warm vanilla notes create a cozy, comforting atmosphere at home."
+        description: "Sweet cinnamon and buttery bakery aromas that make every room feel cozy."
     },
     {
         id: 3,
-        name: "Crochet Plushie",
-        price: 19.99,
+        name: "Crochet Mug Cozy",
+        price: 11.99,
         category: "Handmade",
-        description: "A soft handmade plushie made with careful stitching and cozy texture."
+        description: "A handmade cozy that keeps your favorite drink warm and stylish."
     },
     {
         id: 4,
-        name: "Crochet Keychain",
-        price: 7.99,
+        name: "Coffee Bean Keychain",
+        price: 8.99,
         category: "Handmade",
-        description: "A charming keychain that adds a personal handmade touch to everyday items."
+        description: "A tiny handcrafted keepsake with a playful coffee-inspired look."
     }
 ];
 
@@ -163,7 +163,7 @@ renderProducts();
 updateCart();
 
 console.log("Shop loaded");
-addToCart("Lavender Wax Melt");
-addToCart("Crochet Plushie");
+addToCart("Hazelnut Latte Candle");
+addToCart("Crochet Mug Cozy");
 viewCart();
 filterByCategory("Home Fragrance");
