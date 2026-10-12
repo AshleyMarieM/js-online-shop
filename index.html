@@ -4,79 +4,228 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Handmade & Home Fragrance Shop</title>
-
     <style>
+        :root {
+            --bg: #f7f4ef;
+            --surface: #ffffff;
+            --surface-soft: #efe7dd;
+            --beige: #e3d7c9;
+            --beige-dark: #d6c6b4;
+            --text: #4a433b;
+            --text-strong: #5a5248;
+            --accent: #b7816a;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: "Segoe UI", sans-serif;
-            background-color: #f7f4ef; /* soft cream */
-            color: #4a433b; /* warm brown */
+            background-color: var(--bg);
+            color: var(--text);
         }
 
-        /* Header */
         h1 {
             text-align: center;
             margin-top: 40px;
             font-size: 3rem;
-            color: #5a5248;
+            color: var(--text-strong);
             font-family: "Brush Script MT", "Lucida Handwriting", cursive;
             font-weight: normal;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.08);
         }
 
-        /* Cozy divider */
         .divider {
             width: 80px;
             height: 4px;
-            background-color: #d8c7b4; /* warm beige */
+            background-color: #d8c7b4;
             border-radius: 10px;
             margin: 15px auto 30px auto;
         }
 
-        /* Navigation below header */
         .nav-links {
             display: flex;
             justify-content: center;
             gap: 25px;
             margin-bottom: 40px;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #4a433b;
+            color: var(--text);
             font-weight: 600;
-            background-color: #e3d7c9; /* cozy beige */
+            background-color: var(--beige);
             padding: 10px 20px;
-            border-radius: 20px; /* pill shape */
+            border-radius: 20px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             transition: 0.2s ease;
         }
 
         .nav-links a:hover {
-            background-color: #d6c6b4;
+            background-color: var(--beige-dark);
             transform: translateY(-2px);
         }
 
-        /* Cozy content box */
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
+        .page-shell {
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .shop-layout {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .product-panel,
+        .cart-panel {
+            background: var(--surface);
+            border-radius: 16px;
+            box-shadow: 0 3px 10px var(--shadow);
+            padding: 25px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--text-strong);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn,
+        .add-btn {
+            border: none;
+            border-radius: 999px;
+            padding: 10px 18px;
+            background-color: var(--beige);
+            color: var(--text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .filter-btn:hover,
+        .add-btn:hover {
+            background-color: var(--beige-dark);
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #fffaf6;
+            border: 1px solid #f0e5dc;
             border-radius: 14px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
-        .container p {
-            font-size: 1.15rem;
-            line-height: 1.7;
+        .product-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
         }
 
-        /* Cozy accent section */
+        .product-card h3 {
+            margin: 0 0 8px;
+            font-size: 1.2rem;
+        }
+
+        .product-category {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .product-card p {
+            margin: 0 0 16px;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        .product-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-strong);
+        }
+
+        .cart-panel h2 {
+            margin-top: 0;
+            color: var(--text-strong);
+        }
+
+        .cart-items {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 12px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f1e8df;
+        }
+
+        .cart-total {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid #f1e8df;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            color: var(--text-strong);
+        }
+
+        .empty-cart {
+            color: #7a6c63;
+            font-style: italic;
+        }
+
         .accent-box {
-            margin: 40px auto;
-            max-width: 700px;
-            background-color: #efe7dd; /* soft latte tone */
+            margin: 30px auto 0;
+            background-color: var(--surface-soft);
             padding: 20px;
             border-radius: 12px;
             text-align: center;
@@ -86,17 +235,20 @@
         .accent-box p {
             margin: 0;
             font-size: 1.1rem;
-            color: #5a5248;
+            color: var(--text-strong);
+        }
+
+        @media (max-width: 800px) {
+            .shop-layout {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-
     <h1>Handmade & Home Fragrance Shop</h1>
-
     <div class="divider"></div>
 
-    <!-- Navigation below header -->
     <div class="nav-links">
         <a href="#">Home</a>
         <a href="#">Handmade</a>
@@ -104,12 +256,33 @@
         <a href="#">Cart <span id="cart-count">0</span></a>
     </div>
 
-    <div class="container">
-        <p>Welcome to my cozy online shop, featuring handmade crochet creations and soothing home fragrance items like wax melts and candles. This project will grow each week as I learn more JavaScript and add new features.</p>
-    </div>
+    <div class="page-shell">
+        <div class="shop-layout">
+            <section class="product-panel">
+                <div class="section-header">
+                    <h2>Shop Products</h2>
+                    <div class="filter-group" aria-label="Product filters">
+                        <button class="filter-btn active" data-category="All">All</button>
+                        <button class="filter-btn" data-category="Handmade">Handmade</button>
+                        <button class="filter-btn" data-category="Home Fragrance">Home Fragrance</button>
+                    </div>
+                </div>
+                <div id="product-list" class="product-grid" aria-live="polite"></div>
+            </section>
 
-    <div class="accent-box">
-        <p>🕯️ Light a candle, relax, and enjoy browsing.</p>
+            <aside class="cart-panel">
+                <h2>Your Cart</h2>
+                <ul id="cart-items" class="cart-items" aria-live="polite"></ul>
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+            </aside>
+        </div>
+
+        <div class="accent-box">
+            <p>🕯️ Light a candle, relax, and enjoy browsing.</p>
+        </div>
     </div>
 
     <script src="app.js"></script>
