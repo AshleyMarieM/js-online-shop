@@ -91,9 +91,10 @@ function viewCart() {
 function filterByCategory(category) {
     currentFilter = category;
 
-    document.querySelectorAll(".filter-btn").forEach(button => {
+    document.querySelectorAll(".tab-btn").forEach(button => {
         const isActive = button.dataset.category === category;
         button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
     });
 
     renderProducts();
@@ -146,9 +147,9 @@ function updateCart() {
 }
 
 document.addEventListener("click", (event) => {
-    const filterButton = event.target.closest(".filter-btn");
-    if (filterButton) {
-        filterByCategory(filterButton.dataset.category);
+    const tabButton = event.target.closest(".tab-btn");
+    if (tabButton) {
+        filterByCategory(tabButton.dataset.category);
         return;
     }
 

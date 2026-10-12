@@ -106,13 +106,16 @@
             color: var(--text-strong);
         }
 
-        .filter-group {
+        .tab-list {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+            list-style: none;
         }
 
-        .filter-btn,
+        .tab-btn,
         .add-btn {
             border: none;
             border-radius: 999px;
@@ -124,12 +127,12 @@
             transition: 0.2s ease;
         }
 
-        .filter-btn:hover,
+        .tab-btn:hover,
         .add-btn:hover {
             background-color: var(--beige-dark);
         }
 
-        .filter-btn.active {
+        .tab-btn.active {
             background-color: var(--accent);
             color: white;
         }
@@ -261,11 +264,11 @@
             <section class="product-panel">
                 <div class="section-header">
                     <h2>Shop Products</h2>
-                    <div class="filter-group" aria-label="Product filters">
-                        <button class="filter-btn active" data-category="All">All</button>
-                        <button class="filter-btn" data-category="Handmade">Handmade</button>
-                        <button class="filter-btn" data-category="Home Fragrance">Home Fragrance</button>
-                    </div>
+                    <ul class="tab-list" aria-label="Product tabs">
+                        <li><button class="tab-btn active" data-category="All" aria-pressed="true">All</button></li>
+                        <li><button class="tab-btn" data-category="Handmade" aria-pressed="false">Handmade</button></li>
+                        <li><button class="tab-btn" data-category="Home Fragrance" aria-pressed="false">Home Fragrance</button></li>
+                    </ul>
                 </div>
                 <div id="product-list" class="product-grid" aria-live="polite"></div>
             </section>
