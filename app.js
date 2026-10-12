@@ -29,19 +29,35 @@ const products = [
     }
 ];
 
-let cart = [];
+// cart will be an object keyed by product id for easy quantity management
+let cart = {};
 let currentFilter = "All";
 
 const cartCount = document.getElementById("cart-count");
 const cartItems = document.getElementById("cart-items");
 const cartTotal = document.getElementById("cart-total");
 const productList = document.getElementById("product-list");
+const TOAST_TIME = 2000;
+
+function loadCartFromStorage() {
+    try {
+        const raw = localStorage.getItem('cozy-cart');
+        if (raw) cart = JSON.parse(raw);
+    } catch (e) {
+        console.warn('Failed to load cart from localStorage', e);
+    }
+}
+
+function saveCartToStorage() {
+    try {
+        localStorage.setItem('cozy-cart', JSON.stringify(cart));
+    } catch (e) {
+        console.warn('Failed to save cart to localStorage', e);
+    }
+}
 
 function getFilteredProducts() {
-    if (currentFilter === "All") {
-        return products;
-    }
-
+    if (currentFilter === "All") return products;
     return products.filter(product => product.category === currentFilter);
 }
 
@@ -52,118 +68,180 @@ function renderProducts() {
         const icon = product.category === "Home Fragrance" ? "🕯️" : "🧶";
 
         return `
-            <article class="product-card">
+            <article class="product-card" data-id="${product.id}">
                 <div class="product-icon">${icon}</div>
                 <h3>${product.name}</h3>
                 <span class="product-category">${product.category}</span>
                 <p>${product.description}</p>
                 <div class="product-row">
                     <span class="price">$${product.price.toFixed(2)}</span>
-                    <button class="add-btn" data-name="${product.name}">Add to Cart</button>
+                    <div style="display:flex; gap:8px; align-items:center">
+                      <button class="add-btn" data-id="${product.id}">Add to Cart</button>
+                    </div>
                 </div>
             </article>
         `;
     }).join("");
 }
 
-function addToCart(productName) {
-    const selectedProduct = products.find(product => product.name === productName);
+function showToast(message) {
+    let toast = document.getElementById('toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.className = 'toast';
+        document.body.appendChild(toast);
+    }
 
-    if (!selectedProduct) {
-        console.log(`Product not found: ${productName}`);
+    toast.textContent = message;
+    toast.classList.add('visible');
+    setTimeout(() => toast.classList.remove('visible'), TOAST_TIME);
+}
+
+function addToCart(productId, qty = 1) {
+    const product = products.find(p => p.id === Number(productId));
+    if (!product) return;
+
+    const key = String(product.id);
+    if (!cart[key]) cart[key] = { ...product, quantity: 0 };
+    cart[key].quantity += qty;
+
+    animateAddButton(productId);
+    saveCartToStorage();
+    updateCart();
+    showToast(`${product.name} added to cart`);
+    console.log(`Added ${qty} x ${product.name} to cart`);
+}
+
+function animateAddButton(productId) {
+    const btn = document.querySelector(`.add-btn[data-id="${productId}"]`);
+    if (!btn) return;
+    btn.classList.add('popped');
+    setTimeout(() => btn.classList.remove('popped'), 350);
+}
+
+function removeFromCart(productId) {
+    const key = String(productId);
+    if (cart[key]) {
+        const name = cart[key].name;
+        delete cart[key];
+        saveCartToStorage();
+        updateCart();
+        showToast(`${name} removed`);
+        console.log(`Removed ${name} from cart`);
+    }
+}
+
+function changeQuantity(productId, delta) {
+    const key = String(productId);
+    if (!cart[key]) return;
+    cart[key].quantity += delta;
+    if (cart[key].quantity <= 0) {
+        removeFromCart(productId);
+        return;
+    }
+    saveCartToStorage();
+    updateCart();
+}
+
+function updateCart() {
+    const entries = Object.values(cart);
+    const totalCount = entries.reduce((s, it) => s + it.quantity, 0);
+    cartCount.textContent = totalCount;
+
+    if (entries.length === 0) {
+        cartItems.innerHTML = '<li class="empty-cart">Your cart is empty.</li>';
+        cartTotal.textContent = "$0.00";
         return;
     }
 
-    cart.push(selectedProduct);
-    updateCart();
-    console.log(`Added to cart: ${productName}`);
+    cartItems.innerHTML = entries.map(item => {
+        const lineTotal = item.price * item.quantity;
+        return `
+            <li class="cart-item" data-id="${item.id}">
+                <div style="display:flex;flex-direction:column">
+                  <strong>${item.name}</strong>
+                  <small class="product-category">$${item.price.toFixed(2)} each</small>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <button class="qty-btn" data-id="${item.id}" data-delta="-1">-</button>
+                  <span aria-live="polite">${item.quantity}</span>
+                  <button class="qty-btn" data-id="${item.id}" data-delta="1">+</button>
+                  <button class="remove-btn" data-id="${item.id}" aria-label="Remove ${item.name}">Remove</button>
+                  <span style="min-width:64px;text-align:right">$${lineTotal.toFixed(2)}</span>
+                </div>
+            </li>
+        `;
+    }).join('');
+
+    const total = entries.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    cartTotal.textContent = `$${total.toFixed(2)}`;
 }
 
 function viewCart() {
-    console.log("Viewing cart:");
-    cart.forEach(item => {
-        console.log(`${item.name} - $${item.price.toFixed(2)}`);
-    });
-
+    console.log('Viewing cart:');
+    Object.values(cart).forEach(i => console.log(`${i.name} x${i.quantity} - $${(i.price*i.quantity).toFixed(2)}`));
     return cart;
 }
 
 function filterByCategory(category) {
     currentFilter = category;
 
-    document.querySelectorAll(".tab-btn").forEach(button => {
+    document.querySelectorAll('.tab-btn').forEach(button => {
         const isActive = button.dataset.category === category;
-        button.classList.toggle("active", isActive);
-        button.setAttribute("aria-pressed", String(isActive));
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', String(isActive));
     });
 
     renderProducts();
-
-    console.log(`Products in category: ${category}`);
-    const filtered = getFilteredProducts();
-    filtered.forEach(item => {
-        console.log(`${item.name} - $${item.price.toFixed(2)}`);
-    });
 }
 
-function updateCart() {
-    cartCount.textContent = cart.length;
-
-    if (cart.length === 0) {
-        cartItems.innerHTML = '<li class="empty-cart">Your cart is empty.</li>';
-        cartTotal.textContent = "$0.00";
-        return;
-    }
-
-    const groupedItems = cart.reduce((items, product) => {
-        const itemKey = product.name;
-
-        if (!items[itemKey]) {
-            items[itemKey] = {
-                name: product.name,
-                price: product.price,
-                quantity: 0
-            };
-        }
-
-        items[itemKey].quantity += 1;
-        return items;
-    }, {});
-
-    const cartEntries = Object.values(groupedItems);
-
-    cartItems.innerHTML = cartEntries.map(item => {
-        const lineTotal = item.price * item.quantity;
-        return `
-            <li class="cart-item">
-                <span>${item.name} x${item.quantity}</span>
-                <span>$${lineTotal.toFixed(2)}</span>
-            </li>
-        `;
-    }).join("");
-
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
-    cartTotal.textContent = `$${total.toFixed(2)}`;
-}
-
-document.addEventListener("click", (event) => {
-    const tabButton = event.target.closest(".tab-btn");
+// Delegated click handling for all interactive buttons
+document.addEventListener('click', (event) => {
+    const tabButton = event.target.closest('.tab-btn');
     if (tabButton) {
         filterByCategory(tabButton.dataset.category);
         return;
     }
 
-    const addButton = event.target.closest(".add-btn");
+    const addButton = event.target.closest('.add-btn');
     if (addButton) {
-        addToCart(addButton.dataset.name);
+        addToCart(addButton.dataset.id, 1);
+        return;
+    }
+
+    const qtyButton = event.target.closest('.qty-btn');
+    if (qtyButton) {
+        changeQuantity(qtyButton.dataset.id, Number(qtyButton.dataset.delta));
+        return;
+    }
+
+    const removeButton = event.target.closest('.remove-btn');
+    if (removeButton) {
+        removeFromCart(removeButton.dataset.id);
+        return;
     }
 });
 
+// keyboard accessibility: allow Enter on focused buttons
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && document.activeElement) {
+        const btn = document.activeElement;
+        if (btn.classList.contains('add-btn')) {
+            addToCart(btn.dataset.id, 1);
+        }
+        if (btn.classList.contains('qty-btn')) {
+            changeQuantity(btn.dataset.id, Number(btn.dataset.delta));
+        }
+        if (btn.classList.contains('remove-btn')) {
+            removeFromCart(btn.dataset.id);
+        }
+    }
+});
+
+// initial boot
+loadCartFromStorage();
 renderProducts();
 updateCart();
 
-console.log("Shop loaded");
-addToCart("Hazelnut Latte Candle");
-addToCart("Crochet Mug Cozy");
-viewCart();
-filterByCategory("Home Fragrance");
+console.log('Shop loaded with enhanced cart controls');
