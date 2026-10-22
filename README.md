@@ -78,3 +78,19 @@ Add category filter buttons
 Add a dynamic cart display on the webpage
 
 Improve styling and layout
+
+
+# Week 3 – DOM Manipulation
+
+This week I added full DOM rendering to my Handmade & Home Fragrance shop.  
+Key features include:
+
+- `renderProducts()` dynamically builds product cards from my products array
+- Add to Cart buttons wired with `addEventListener()`
+- Real-time cart count updates
+- Category filter buttons that re-render the product grid
+- LocalStorage cart persistence
+- Toast notifications and button animations
+- Keyboard accessibility and delegated event handling
+
+My shop now behaves like a real interactive storefront.
