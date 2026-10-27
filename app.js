@@ -64,7 +64,7 @@ function getFilteredProducts() {
     return products.filter(product => product.category === currentFilter);
 }
 
-// WEEK 3: Render product cards dynamically
+// Render product cards dynamically
 function renderProducts() {
     const filteredProducts = getFilteredProducts();
 
@@ -246,6 +246,8 @@ renderProducts();
 updateCart();
 
 console.log('Shop loaded with enhanced cart controls');
+
+// ⭐ Week 4 Interactive Assignment Function
 function validateLogin() {
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
