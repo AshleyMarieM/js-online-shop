@@ -253,8 +253,38 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Login box styling */
+        .login-box {
+            margin: 40px auto;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .login-box input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #d3a979;
+        }
+
+        .login-box button {
+            padding: 10px;
+            border-radius: 8px;
+            background-color: var(--coffee);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
+
 <body>
     <h1>Cozy Cup & Candle Co.</h1>
     <div class="divider"></div>
@@ -294,14 +324,18 @@
             <p>☕ Slow sips, soft scents, and handcrafted comfort.</p>
         </div>
 
+        <!-- ⭐ LOGIN FORM (correctly placed inside body) -->
+        <div class="login-box">
+            <input id="username" type="text" placeholder="Username">
+            <input id="password" type="password" placeholder="Password">
+
+            <p id="login-error" class="error-message"></p>
+
+            <button id="login-btn" onclick="validateLogin()">Login</button>
+        </div>
+
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
-<div class="login-box">
-    <input id="username" type="text" placeholder="Username">
-    <input id="password" type="password" placeholder="Password">
-
-    <p id="login-error" class="error-message"></p>
-
-    <button id="login-btn" onclick="validateLogin()">Login</button>
-</div>
