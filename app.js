@@ -240,6 +240,37 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+function validateLogin() {
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const errorBox = document.getElementById("login-error");
+    const submitBtn = document.getElementById("login-btn");
+
+    submitBtn.disabled = true;
+
+    try {
+        if (usernameInput.value.trim() === "") {
+            throw new Error("Username cannot be empty.");
+        }
+
+        if (passwordInput.value.trim() === "") {
+            throw new Error("Password cannot be empty.");
+        }
+
+        errorBox.textContent = "";
+        errorBox.classList.remove("visible");
+
+        console.log("Login successful!");
+
+    } catch (error) {
+        errorBox.textContent = error.message;
+        errorBox.classList.add("visible");
+
+    } finally {
+        submitBtn.disabled = false;
+    }
+}
+
 // Initial boot
 loadCartFromStorage();
 renderProducts();
