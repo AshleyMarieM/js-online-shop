@@ -240,6 +240,12 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Initial boot
+loadCartFromStorage();
+renderProducts();
+updateCart();
+
+console.log('Shop loaded with enhanced cart controls');
 function validateLogin() {
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
@@ -270,10 +276,3 @@ function validateLogin() {
         submitBtn.disabled = false;
     }
 }
-
-// Initial boot
-loadCartFromStorage();
-renderProducts();
-updateCart();
-
-console.log('Shop loaded with enhanced cart controls');
