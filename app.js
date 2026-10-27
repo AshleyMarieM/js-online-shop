@@ -39,6 +39,7 @@ const cartTotal = document.getElementById("cart-total");
 const productList = document.getElementById("product-list");
 const TOAST_TIME = 2000;
 
+// Load cart from localStorage
 function loadCartFromStorage() {
     try {
         const raw = localStorage.getItem('cozy-cart');
@@ -48,6 +49,7 @@ function loadCartFromStorage() {
     }
 }
 
+// Save cart to localStorage
 function saveCartToStorage() {
     try {
         localStorage.setItem('cozy-cart', JSON.stringify(cart));
@@ -56,11 +58,13 @@ function saveCartToStorage() {
     }
 }
 
+// Filter products by category
 function getFilteredProducts() {
     if (currentFilter === "All") return products;
     return products.filter(product => product.category === currentFilter);
 }
 
+// WEEK 3: Render product cards dynamically
 function renderProducts() {
     const filteredProducts = getFilteredProducts();
 
@@ -75,15 +79,14 @@ function renderProducts() {
                 <p>${product.description}</p>
                 <div class="product-row">
                     <span class="price">$${product.price.toFixed(2)}</span>
-                    <div style="display:flex; gap:8px; align-items:center">
-                      <button class="add-btn" data-id="${product.id}">Add to Cart</button>
-                    </div>
+                    <button class="add-btn" data-id="${product.id}">Add to Cart</button>
                 </div>
             </article>
         `;
     }).join("");
 }
 
+// Toast notification
 function showToast(message) {
     let toast = document.getElementById('toast');
     if (!toast) {
@@ -98,6 +101,7 @@ function showToast(message) {
     setTimeout(() => toast.classList.remove('visible'), TOAST_TIME);
 }
 
+// Add item to cart
 function addToCart(productId, qty = 1) {
     const product = products.find(p => p.id === Number(productId));
     if (!product) return;
@@ -110,9 +114,9 @@ function addToCart(productId, qty = 1) {
     saveCartToStorage();
     updateCart();
     showToast(`${product.name} added to cart`);
-    console.log(`Added ${qty} x ${product.name} to cart`);
 }
 
+// Button animation
 function animateAddButton(productId) {
     const btn = document.querySelector(`.add-btn[data-id="${productId}"]`);
     if (!btn) return;
@@ -120,6 +124,7 @@ function animateAddButton(productId) {
     setTimeout(() => btn.classList.remove('popped'), 350);
 }
 
+// Remove item from cart
 function removeFromCart(productId) {
     const key = String(productId);
     if (cart[key]) {
@@ -128,10 +133,10 @@ function removeFromCart(productId) {
         saveCartToStorage();
         updateCart();
         showToast(`${name} removed`);
-        console.log(`Removed ${name} from cart`);
     }
 }
 
+// Change quantity
 function changeQuantity(productId, delta) {
     const key = String(productId);
     if (!cart[key]) return;
@@ -144,6 +149,7 @@ function changeQuantity(productId, delta) {
     updateCart();
 }
 
+// Update cart display + badge
 function updateCart() {
     const entries = Object.values(cart);
     const totalCount = entries.reduce((s, it) => s + it.quantity, 0);
@@ -178,12 +184,7 @@ function updateCart() {
     cartTotal.textContent = `$${total.toFixed(2)}`;
 }
 
-function viewCart() {
-    console.log('Viewing cart:');
-    Object.values(cart).forEach(i => console.log(`${i.name} x${i.quantity} - $${(i.price*i.quantity).toFixed(2)}`));
-    return cart;
-}
-
+// Category filter
 function filterByCategory(category) {
     currentFilter = category;
 
@@ -196,7 +197,7 @@ function filterByCategory(category) {
     renderProducts();
 }
 
-// Delegated click handling for all interactive buttons
+// Delegated click handling
 document.addEventListener('click', (event) => {
     const tabButton = event.target.closest('.tab-btn');
     if (tabButton) {
@@ -223,7 +224,7 @@ document.addEventListener('click', (event) => {
     }
 });
 
-// keyboard accessibility: allow Enter on focused buttons
+// Keyboard accessibility
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && document.activeElement) {
         const btn = document.activeElement;
@@ -239,7 +240,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// initial boot
+// Initial boot
 loadCartFromStorage();
 renderProducts();
 updateCart();
