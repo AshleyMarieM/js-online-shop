@@ -28,4 +28,3 @@ export const products = [
         inStock: false   // REQUIRED
     }
 ];
-
