@@ -1,5 +1,4 @@
-import { products } from "./products.js";
-
+// cart.js
 export let cart = {};
 
 export function loadCartFromStorage() {
@@ -19,15 +18,14 @@ export function saveCartToStorage() {
     }
 }
 
-export function addToCart(productName) {
-    const product = products.find(p => p.productName === productName);
-
+// ⭐ Week 5 version: product object is passed directly
+export function addToCart(product) {
     if (!product) {
         throw new Error("Product not found.");
     }
 
     if (!product.inStock) {
-        throw new Error(`${productName} is out of stock.`);
+        throw new Error(`${product.productName} is out of stock.`);
     }
 
     const key = String(product.id);
